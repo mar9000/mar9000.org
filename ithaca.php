@@ -8,10 +8,9 @@
   <div class="container">
     <!-- Main message.   -->
     <div>
+      <p>There was a time where I was far away from home and I had to face everything alone. In those days these words helped to don't get lost and keep following my rough and narrow path.</p>
       <h2>Ithaca</h2>
-      <p class="lead">There was a time where I was far away from home and I should face everything alone. In those days this poetry helped to keep following my rough and narrow path, so I reserved a special page for it.</p>
-
-      <blockquote>
+      <small>
 	<p>
 	  When you set out on your journey to Ithaca,<br/>
 	  pray that the road is long,<br/>
@@ -26,7 +25,6 @@
 	  if you do not carry them within your soul,<br/>
 	  if your soul does not set them up before you.<br/>
 	</p>
-        <br/>
 	<p>
 	  Pray that the road is long.<br/>
 	  That the summer mornings are many, when,<br/>
@@ -40,7 +38,6 @@
 	  visit many Egyptian cities,<br/>
 	  to learn and learn from scholars.<br/>
 	</p>
-        <br/>
 	<p>
 	  Always keep Ithaca in your mind.<br/>
 	  To arrive there is your ultimate goal.<br/>
@@ -50,20 +47,18 @@
 	  rich with all you have gained on the way,<br/>
 	  not expecting that Ithaca will offer you riches.<br/>
 	</p>
-        <br/>
 	<p>
 	  Ithaca has given you the beautiful voyage.<br/>
 	  Without her you would have never set out on the road.<br/>
 	  She has nothing more to give you.<br/>
 	</p>
-        <br/>
 	<p>
 	  And if you find her poor, Ithaca has not deceived you.<br/>
 	  Wise as you have become, with so much experience,<br/>
 	  you must already have understood what Ithacas mean.<br/>
 	</p>
-	<small>Constantine P. Cavafy (1911)<cite title="Ithaca">Ithaca</cite></small>
-      </blockquote>
+	<small>Constantine P. Cavafy (1911), <cite title="Ithaca">Ithaca</cite></small>
+      </small>
     </div>
 
     <?php
