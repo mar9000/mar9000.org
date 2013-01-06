@@ -15,7 +15,8 @@
   </style>
   
   <!-- Fav icon -->
-  <link rel="shortcut icon" href="icons/favicon.png">
+  <link rel="icon" href="images/favicon.png">
+  <link rel="shortcut icon" href="images/favicon.png">
 </head>
 
 <body>
