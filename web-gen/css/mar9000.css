@@ -1,0 +1,11 @@
+.photo {
+	max-width: 60px;
+	float: left;
+	margin-right: 10px;
+}
+.blog-main {
+	margin-top: 10px;
+}
+.blog-sidebar {
+	margin-top: 30px;
+}

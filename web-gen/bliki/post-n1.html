@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Header.   -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Marco LOMBARDO">
+  <title>The MAR9000's eye</title>
+  
+  <!-- Fav icon -->
+  <link rel="icon" href="/images/favicon.png">
+  <link rel="shortcut icon" href="/images/favicon.png">
+  
+  <!-- CSS -->
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Blog CSS from bootstrap.   -->
+  <link href="/css/blog.css" rel="stylesheet">
+  <!-- My CSS.   -->
+  <link href="/css/mar9000.css" rel="stylesheet">
+  <!-- In line CSS.   -->
+  <style id="holderjs-style" type="text/css">
+  </style>
+</head>
+
+<body>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item" href="/index.html">Home</a>
+          <a class="blog-nav-item" href="/about.html">About</a>
+          <a class="blog-nav-item" href="/ithaca.html">Ithaca</a>
+          <a class="blog-nav-item" href="/ilblogdigeronimo/">Il blog di Geronimo</a>
+        </nav>
+      </div>
+    </div>
+    
+    <!-- Header end.   -->
+    
+
+<!-- Content.   -->
+<div class="container">
+  <div class="row">
+
+    <!-- Left.   -->
+    <div class="col-sm-8 blog-main">
+        <div class="blog-post">
+
+          <h2 class="blog-post-title"> Post #1 </h2>
+          <!-- Author.   -->
+          <div class="author-section">
+            <p class="photo"> <img src="/images/ml.png" /> </p>
+            <small> <p class="name"> Marco LOMBARDO<br/>
+                                     2014-02-15 </p> </small>
+          </div> <p style="clear: both;" />
+<!-- Abstract: should stay here because if indented a <pre> section does not shows correctly.   -->
+<p>If you are a Java developer and you are interested in Domain Specific Language (DSL)
+and Code Generation, soon or late you are going to play a bit with <a href="http://www.antlr.org">ANTLR</a>.
+In addition if you are such kind of person you will probably know the Martin Fowler
+<a href="http://martinfowler.com/bliki/WhatIsaBliki.html">bliki</a>.
+Now something personal: I in general dislike working with graphic tools when
+I can do the same thing by coding and/or command line (who knows if in one of my next posts I will decide to
+explain why). I also dislike to store into a database things that are much more comfortable into the
+file system. All these reasons drive me to implement my own <i>bliki</i>. </p>
+<!-- Content.   -->
+<p>I have given also an opportunity to WordPress, indeed a spanish blog I translate to italian is
+maintained with WordPress, but let's speak about the static part of this site.</p>
+<h2>The first (bad) grammar</h2>
+<p>Because I aim to experiment with ANTLR I decided to wrote a small language to define a blog post. Once you have
+such a language and you can parse your posts you can use this data to:
+  <ul>
+    <li>create a main page with only last posts.</li>
+    <li>create a page to show only posts tagged with a specific label.</li>
+    <li>create your RSS feed.</li>
+  </ul>
+A post will be something like:
+<pre>
+title: <something>
+url: <url to use for the post>
+date: 
+tags: antlr,java, ..
+content: the HTML part of the post
+</pre>
+</p>
+<p> If you are new to ANTLR the first grammar will be:
+<pre>
+post: title url date tags content;
+
+title: 'title:' LINE;
+url: 'url:' LINE;
+date: 'date:' DIGIT DIGIT DIGIT DIGIT '-' DIGIT DIGIT '-' DIGIT DIGIT NL;
+tags: 'tags:' WORDS? (',' WORDS)? '\n';
+content: 'content:' .*;
+
+DIGIT: [0-9];
+WORDS: ([a-zA-Z0-9] | ' ')+;
+LINE: ~[\r\n]* NL;
+NL: '\r'? '\n';
+</pre>
+If you try this grammar with:
+<pre>
+$ antlr4 BadBlog.g4
+$ javac *.java
+$ grun BadBlog post -tokens test1.post
+</pre>
+You will receive some errors like this <i>line 1:0 missing 'title:' at 'title: something\n'</i>.
+Why ANTLR says <i>title:</i> is missing if it's actually inside the file?
+</p>
+
+<h2>The first good grammar</h2>
+<p>This fact is stated at page 15 of
+<a href="http://pragprog.com/book/tpantlr2/the-definitive-antlr-4-reference">The Definitive ANTLR 4 Reference</a>:
+<blockquote>
+  <p>Note that lexers try to match the longest string possible</p>
+</blockquote>
+Out lexer consume <i>title:</i> while matching the <code>LINE</code> rule, and this is visible from the preceeding command:
+<pre>
+[@0,0:18='title: something\n',<11>,1:0]
+</pre>
+The token 11 is <code>LINE</code>.
+</p>
+<p>The solution is to implement everything at lexer level (I introduce "..." to end the content rule):
+<pre>
+post: TITLE URL DATE TAGS CONTENT;
+
+TITLE: 'title:' .*? NL;
+URL: 'url:' .*? NL;
+DATE: 'date:' .*? NL;
+TAGS: 'tags:' .*? NL;
+CONTENT: 'content:' .*? NL '...' NL;
+NL : '\r'? '\n';
+</pre>
+If you test this you will see that the grammar successfully parse the file at the
+price of having also starting and ending string when accessing the AST, e.g. TITLE().getText()
+will contains also <i>title:</i>.
+</p>
+
+<h2>The <i>island</i> grammar</h2>
+<p>
+With our grammar we want basically to parse:
+  <ul>
+    <li>a tag, like title:, associated with one line.</li>
+    <li>a tag, like content:, associated with more lines.</li>
+    <li>a list of words, like tags: .</li>
+  </ul>
+This is our <i>meta-model</i> expressed formally into the grammar we are going to write.
+</p>
+<p>
+The Lexer respect rules precedence but here the problem is that the <code>LINE</code> rule
+has no start condition and once it starts will match for instance always more chars than <code>WORDS</code>.
+The solution are <i>lexer modes</i> but for this you should split your grammar in a lexer and parser grammars,
+see BlogLexer.g4 and BlogParser.g4 . You need a sequence that start a mode and a sequence that switch back to the
+default mode. Inside a mode you have different lexer rules, for instance after <i>title:</i> we match chars until a
+new line while after <i>content:</i> the new line char alone has nothing special and we match a longer sequence
+as you can see reading the grammar. <br/>
+The only remark is how we match a long sequence of chars, the <code>CH</code> rule, into the lexer that the parser
+join together into a <code>chars</code> object.
+</p>
+<p>I created an eclipse project for this blog, you can play with my grammar:
+  <ul>
+    <li>use <code>compile-lexer.launch</code> to compile the lexer, then</li>
+    <li>use <code>compile-parser.launch</code> to compile the parser, then</li>
+    <li>refresh the eclipse project</li>
+    <li>create the html from templates using <code>update-web-gen.launch</code>.</li>
+  </ul>
+There is also a <code>grun.launch</code> to have from eclipse the same output of <code>grun</code> command, but
+while developing a new grammar, at least when it's a small grammar, it's easier from the command line. <br/>
+The rest of the code at the moment are simple code that parses post files and output HTML files
+using <a href="http://www.stringtemplate.org/">StringTemplate</a>.
+</p>
+
+<h2>Conclusion</h2>
+When you develop a grammar usually you look at the final result that is produced by the parser,
+however you have to don't forget that it receives what the lexer prepares.
+
+        </div> <!-- /.blog-post -->
+    </div> <!-- /.blog-main -->
+
+    <!-- Right.   -->
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar-module sidebar-module-inset">
+            <h4>About</h4>
+            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+          </div>
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">January 2014</a></li>
+              <li><a href="#">December 2013</a></li>
+              <li><a href="#">November 2013</a></li>
+              <li><a href="#">October 2013</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>
+    </div><!-- /.blog-sidebar -->
+
+  </div>   <!-- row.   -->
+</div>   <!-- /.container -->
+
+<!-- Footer.   -->
+<!-- Footer start.   -->
+<div class="blog-footer">
+  <p>Copyright mar9000.org 2011-2014.</p>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/jquery/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+</body></html>

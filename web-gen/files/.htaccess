@@ -1,0 +1,3 @@
+# Directory used to share files, prevent listing.
+Options -Indexes
+
