@@ -30,14 +30,17 @@ import org.antlr.v4.runtime.tree.*;
 import org.mar9000.blog.grammar.BlogLexer;
 import org.mar9000.blog.grammar.BlogParser;
 import org.mar9000.blog.grammar.BlogParser.PostContext;
+import org.pegdown.PegDownProcessor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STRawGroupDir;
 
 public class Blog {
 	
-	public static final String EXTENSION = ".post";
+	public static final String MARKDOWN = ".md";
+	public static final String EXTENSIONS = ".post,.html," + MARKDOWN;
 	public static final String TEMPLATE_EXTENSION = ".st";
 	public static final String TEMPLATES = "/templates";
+	public static final String WEB_TEMPLATE = "/web-template";
 	public static final String WEB_GEN = "/web-gen";
 	public static final String HEADER = "header.html";
 	public static final String FOOTER = "footer.html";
@@ -98,11 +101,12 @@ public class Blog {
 			}
 			File[] files = postsDir.listFiles();
 			for (int f = 0; f < files.length; f++) {
-				if (files[f].isDirectory()) {
-					System.out.println("\nProcess subdir. " + files[f].getName());
-					processPosts(files[f].getAbsolutePath(), webDirPath + "/" + files[f].getName());
-				} else if (files[f].getName().endsWith(EXTENSION)) {
-					processPost(files[f], webDirPath);
+				File file = files[f];
+				if (file.isDirectory()) {
+					System.out.println("\nProcess subdir. " + file.getName());
+					processPosts(file.getAbsolutePath(), webDirPath + "/" + file.getName());
+				} else if (EXTENSIONS.indexOf(file.getName().substring(file.getName().lastIndexOf("."))) != -1) {
+					processPost(file, webDirPath);
 				}
 			}
 		} catch (Exception e) {
@@ -128,8 +132,18 @@ public class Blog {
 		st.add("title", tree.title().LINE().getText());
 		st.add("url", tree.url().LINE().getText());
 		st.add("date", tree.date().LINE().getText());
-		st.add("abstract", tree.dex().chars().getText());
-		st.add("content", tree.content().chars().getText());
+		//
+		String dex = tree.dex().chars().getText();
+		if (post.getName().endsWith(MARKDOWN)) {
+			dex = new PegDownProcessor().markdownToHtml(dex);
+		}
+		st.add("abstract", dex);
+		// Markdown?
+		String content = tree.content().chars().getText();
+		if (post.getName().endsWith(MARKDOWN)) {
+			content = new PegDownProcessor().markdownToHtml(content);
+		}
+		st.add("content", content);
 		// Tags.
 		Iterator<TerminalNode> iter = tree.tags().WORDS().iterator();
 		while (iter.hasNext()) {

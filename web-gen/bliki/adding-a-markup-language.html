@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Header.   -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Marco LOMBARDO">
+  <title>The MAR9000's eye</title>
+  
+  <!-- Fav icon -->
+  <link rel="icon" href="/images/favicon.png">
+  <link rel="shortcut icon" href="/images/favicon.png">
+  
+  <!-- CSS -->
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Blog CSS from bootstrap.   -->
+  <link href="/css/blog.css" rel="stylesheet">
+  <!-- My CSS.   -->
+  <link href="/css/mar9000.css" rel="stylesheet">
+  <!-- In line CSS.   -->
+  <style id="holderjs-style" type="text/css">
+  </style>
+</head>
+
+<body>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item" href="/index.html">Home</a>
+          <a class="blog-nav-item" href="/about.html">About</a>
+          <a class="blog-nav-item" href="/ithaca.html">Ithaca</a>
+          <a class="blog-nav-item" href="/ilblogdigeronimo/">Il blog di Geronimo</a>
+        </nav>
+      </div>
+    </div>
+    
+    <!-- Header end.   -->
+    
+
+<!-- Content.   -->
+<div class="container">
+  <div class="row">
+
+    <!-- Left.   -->
+    <div class="col-sm-8 blog-main">
+        <div class="blog-post">
+
+          <h2 class="blog-post-title"> Adding a markup language </h2>
+          <!-- Author.   -->
+          <div class="author-section">
+            <p class="photo"> <img src="/images/ml.png" /> </p>
+            <small> <p class="name"> Marco LOMBARDO<br/>
+                                     2014-03-02 </p> </small>
+          </div> <p style="clear: both;" />
+<!-- Abstract: should stay here because if indented a <pre> section does not shows correctly.   -->
+<p>The previous post introduces a small language to define post files and in this project you can find some java classes to transform them into a small blog, based on bootstrap. The first improvement I see that was missing it's a markup language to speed up writing of posts. I decide to investigate a bit on <em>static site generators</em> like for example <a href="http://jekyllrb.com">Jekyll</a>, actually the one used by github.</p>
+<!-- Content.   -->
+<p>I started searching for <em>static site generator</em> or <em>static web framework</em> and I found among others: <a href="http://jekyllrb.com">Jekyll</a>, <a href="http://blog.getpelican.com">Pelican</a>, <a href="http://octopress.org">Octopress</a>, <a href="http://assemble.io/">Assemble</a>, <a href="http://nanoc.ws">Nanos</a>, <a href="http://wintersmith.io">Wintersmith</a>, <a href="http://phrozn.info/en/">Phrozn</a>, <a href="https://github.com/koenbok/Cactus/">Cactus</a>, <a href="http://zespia.tw/hexo/">Hexo</a>, <a href="http://lkdjiin.github.io/genit/">Genit</a>.<br/>One based on java is <a href="http://jbake.org">JBake</a>.<br/>There is a comprehensive list <a href="http://staticgen.com/">here</a>.</p><p>At this point I asked to myself what I would like to do in the future: use a fully featured static site generator or continue to use my code. I decided for the ladder because the blog itself is not my first goal, instead I would also to experiment with grammars and code generation. So I looked at the above projects more as examples of files organization than projects to use in practice. I will add feature one by one as soon as I will need something not yet implemented.</p><p>Write directly in HTML is time consuming, so the first thing to implement is the possibility to use <a href="http://daringfireball.net/projects/markdown/">Markdown</a> instead of plain HTML, a list of implementations is maintained <a href="http://www.w3.org/community/markdown/wiki/MarkdownImplementations">here</a>.</p><p>Between others <a href="http://markdown.tautua.org/index.html">MarkdownPapers</a> use JavaCC, and <a href="https://github.com/sirthias/pegdown">PegDown</a> is derived from a PEG grammar. I chose the ladder because of better documentation.</p><p>After adding some jars I was able to write my posts using <em>markdown</em>. Now post files with extension <code>.md</code> are parsed as post but <em>abstract</em> and <em>content</em> are transformed with PegDown.<br/>This post is the first of this kind, check out <code>adding-markup-language.md</code> .<br/>This extension has also the side effect that posts written in markdown can be edited with syntax highlight if opened with a specialized editor.</p><p>The java part had very few modifications, for example to process the <em>content</em> I just needed, see the <a href="https://github.com/mar9000/mar9000.org/blob/master/src/org/mar9000/blog/Blog.java">Blog</a> class:</p>
+<pre><code>if (post.getName().endsWith(MARKDOWN)) {
+    content = new PegDownProcessor().markdownToHtml(content);
+}
+</code></pre>
+
+        </div> <!-- /.blog-post -->
+    </div> <!-- /.blog-main -->
+
+    <!-- Right.   -->
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar-module sidebar-module-inset">
+            <h4>About</h4>
+            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+          </div>
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">January 2014</a></li>
+              <li><a href="#">December 2013</a></li>
+              <li><a href="#">November 2013</a></li>
+              <li><a href="#">October 2013</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>
+    </div><!-- /.blog-sidebar -->
+
+  </div>   <!-- row.   -->
+</div>   <!-- /.container -->
+
+<!-- Footer.   -->
+<!-- Footer start.   -->
+<div class="blog-footer">
+  <p>Copyright mar9000.org 2011-2014.</p>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/jquery/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+</body></html>
