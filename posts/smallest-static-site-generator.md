@@ -8,7 +8,7 @@ static web generator we can imagine?
 content:
 In fact this is only the first list of *missing features*, for example [Octopress](http://octopress.org) has
 a beautiful syntax highlight, anyway... I asked to myself the minimum to be able to publish and organize
-content and let people follow my blog if interesting. So:
+content and let people follows my blog, so:
 
   - my index page is almost empty, I'll publish here last posts abstract to drive the reader.
   - already with the index page I could write posts and readers find posts on the index. However minimum

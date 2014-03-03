@@ -11,7 +11,7 @@
     </author>
     <updated>2014-03-03T21:00:00Z</updated>
     <published>2014-03-03T21:00:00Z</published>
-    <summary type="html">&lt;p&gt;Now that I can write posts in HTML and in Markdown what is missing to create the smallest static web generator we can imagine?&lt;/p&gt;&lt;p&gt;In fact this is only the first list of &lt;em&gt;missing features&lt;/em&gt;, for example &lt;a href="http://octopress.org"&gt;Octopress&lt;/a&gt; has a beautiful syntax highlight, anyway... I asked to myself the minimum to be able to publish and organize content and let people follow my blog if interesting. So:&lt;/p&gt;
+    <summary type="html">&lt;p&gt;Now that I can write posts in HTML and in Markdown what is missing to create the smallest static web generator we can imagine?&lt;/p&gt;&lt;p&gt;In fact this is only the first list of &lt;em&gt;missing features&lt;/em&gt;, for example &lt;a href="http://octopress.org"&gt;Octopress&lt;/a&gt; has a beautiful syntax highlight, anyway... I asked to myself the minimum to be able to publish and organize content and let people follows my blog, so:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;my index page is almost empty, I'll publish here last posts abstract to drive the reader.&lt;/li&gt;
   &lt;li&gt;already with the index page I could write posts and readers find posts on the index. However minimum search capabilities can be implemented with tags even if they will become useful only with several posts.&lt;/li&gt;
