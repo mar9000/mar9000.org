@@ -1,6 +1,6 @@
 title:Post #1
 url:post-n1.html
-date:2014-02-15
+date:2014-02-15 00:00
 tags:antlr, DSL, code generation
 abstract:<p>If you are a Java developer and you are interested in Domain Specific Language (DSL)
 and Code Generation, soon or late you are going to play a bit with <a href="http://www.antlr.org">ANTLR</a>.

@@ -22,6 +22,8 @@
   <link href="/css/blog.css" rel="stylesheet">
   <!-- My CSS.   -->
   <link href="/css/mar9000.css" rel="stylesheet">
+  <!-- Font Awesome.   -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <!-- In line CSS.   -->
   <style id="holderjs-style" type="text/css">
   </style>
@@ -34,7 +36,9 @@
           <a class="blog-nav-item" href="/index.html">Home</a>
           <a class="blog-nav-item" href="/about.html">About</a>
           <a class="blog-nav-item" href="/ithaca.html">Ithaca</a>
+          <a class="blog-nav-item" href="/tags/index.html">Tags</a>
           <a class="blog-nav-item" href="/ilblogdigeronimo/">Il blog di Geronimo</a>
+          <a class="blog-nav-item" href="/posts.atom"><i class="fa fa-rss"></i></a>
         </nav>
       </div>
     </div>
@@ -72,9 +76,16 @@
     <!-- Right.   -->
     <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
         <div class="sidebar-module sidebar-module-inset">
-            <h4>About</h4>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-          </div>
+            <h4>Tags:</h4>
+            <p>
+                          <a href="/tags/markup.html"><span class="label label-primary">markup</span></a>
+                          <a href="/tags/markdown.html"><span class="label label-primary">markdown</span></a>
+                          <a href="/tags/jekyll.html"><span class="label label-primary">jekyll</span></a>
+                          <a href="/tags/pelican.html"><span class="label label-primary">pelican</span></a>
+
+            </p>
+        </div>
+          <!-- Commented out, to be implemented on the index page.
           <div class="sidebar-module">
             <h4>Archives</h4>
             <ol class="list-unstyled">
@@ -91,7 +102,7 @@
               <li><a href="#">Twitter</a></li>
               <li><a href="#">Facebook</a></li>
             </ol>
-          </div>
+          </div>  -->
     </div><!-- /.blog-sidebar -->
 
   </div>   <!-- row.   -->

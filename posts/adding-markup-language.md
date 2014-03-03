@@ -1,6 +1,6 @@
 title:Adding a markup language
 url:adding-a-markup-language.html
-date:2014-03-02
+date:2014-03-02 00:00
 tags:markup, markdown, jekyll, pelican
 abstract:The previous post introduces a small language to define post files and in this
 project you can find some java classes to transform them into a small blog, based on bootstrap.

@@ -23,7 +23,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
@@ -33,6 +43,15 @@ import org.mar9000.blog.grammar.BlogParser.PostContext;
 import org.pegdown.PegDownProcessor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STRawGroupDir;
+
+import com.sun.syndication.feed.synd.SyndContent;
+import com.sun.syndication.feed.synd.SyndContentImpl;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndEntryImpl;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.feed.synd.SyndFeedImpl;
+import com.sun.syndication.io.FeedException;
+import com.sun.syndication.io.SyndFeedOutput;
 
 public class Blog {
 	
@@ -44,10 +63,16 @@ public class Blog {
 	public static final String WEB_GEN = "/web-gen";
 	public static final String HEADER = "header.html";
 	public static final String FOOTER = "footer.html";
+	public static final int NUMBER_POSTS_ON_INDEX = 7;
+	
+	public static final String FEED_TYPE = "atom_1.0";
+	public static final String FEED_FILENAME= "posts.atom";
 	
 	private static String baseDirPath = null;
 	private static String header = null;
 	private static String footer = null;
+	private static ArrayList<Post> posts = new ArrayList<Post>();
+	private static HashMap<String, ArrayList<Post>> tags = new HashMap<String, ArrayList<Post>>();
 
 	public static void main(String[] args) {
 		// First arguments is mandatory and is the path containing the project.
@@ -65,13 +90,24 @@ public class Blog {
 				// Load files to be rendered in each template.
 				header = readFileAsString(baseDirPath + TEMPLATES + "/" + HEADER);
 				footer = readFileAsString(baseDirPath + TEMPLATES + "/" + FOOTER);
-				// Process index.st and other basic ST files.
-				processSTTemplates(baseDirPath + TEMPLATES, baseDirPath + WEB_GEN);
 				// Process posts.
 				System.out.println("Source dir. is " + baseDirPath + "/posts");
 				System.out.println("Target dir. is " + baseDirPath + "/web\n");
 				processPosts(args[0] + "/posts", baseDirPath + "/web-gen/bliki");
-			} catch (IOException e) {
+				Collections.sort(posts, new Comparator<Post>() {
+					@Override
+					public int compare(Post p1, Post p2) {
+						// Sort in descending order.
+						return p1.getDate().compareTo(p2.getDate()) * -1;
+					}
+				});
+				// Process index.st and other basic ST files.
+				processSTTemplates(baseDirPath + TEMPLATES, baseDirPath + WEB_GEN);
+				// Create tag pages.
+				createTagsPages();
+				// Create atom file.
+				createAtom();
+			} catch (Exception e) {
 				e.printStackTrace();
 				return;
 			}
@@ -116,39 +152,56 @@ public class Blog {
 		return message;
 	}
 
-	private static void processPost(File post, String webDirPath) throws IOException {
+	private static void processPost(File post, String webDirPath) throws IOException, ParseException {
 		System.out.print("Process: " + post.getAbsolutePath() + " ...");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		
 		ANTLRInputStream input = new ANTLRInputStream(new FileReader(post));
 		BlogLexer lexer = new BlogLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		BlogParser parser = new BlogParser(tokens);
 		PostContext tree = parser.post();
+		Post postMetadata = new Post();
+		posts.add(postMetadata);
 		// Instantiate the template.
 		STRawGroupDir stDir = new STRawGroupDir(baseDirPath + "/templates", '$', '$');
 		ST st = stDir.getInstanceOf("post");
 		st.add("header", header);
 		st.add("footer", footer);
 		//
-		st.add("title", tree.title().LINE().getText());
-		st.add("url", tree.url().LINE().getText());
-		st.add("date", tree.date().LINE().getText());
+		postMetadata.setTitle(tree.title().LINE().getText());
+		postMetadata.setUrl(tree.url().LINE().getText());
+		//
+		String dateString = tree.date().LINE().getText();
+		Timestamp date = new Timestamp(dateFormat.parse(dateString).getTime());
+		postMetadata.setDate(date);
 		//
 		String dex = tree.dex().chars().getText();
 		if (post.getName().endsWith(MARKDOWN)) {
 			dex = new PegDownProcessor().markdownToHtml(dex);
 		}
-		st.add("abstract", dex);
+		postMetadata.setSummary(dex);
 		// Markdown?
 		String content = tree.content().chars().getText();
 		if (post.getName().endsWith(MARKDOWN)) {
 			content = new PegDownProcessor().markdownToHtml(content);
 		}
+		postMetadata.setContent(content);
+		st.add("post", postMetadata);
 		st.add("content", content);
 		// Tags.
 		Iterator<TerminalNode> iter = tree.tags().WORDS().iterator();
 		while (iter.hasNext()) {
 			TerminalNode words = iter.next();
-			st.add("tags", words.getText());
+			String tag = words.getText().trim();
+			st.add("tags", tag);
+			// Add to tags.
+			ArrayList<Post> tagPosts = tags.get(tag);
+			if (tagPosts == null) {
+				tagPosts = new ArrayList<Post>();
+				tags.put(tag, tagPosts);
+			}
+			tagPosts.add(postMetadata);
 		}
 		// Output HTML file through ST.
 		File output = new File(webDirPath + "/" + tree.url().LINE().getText());
@@ -168,7 +221,7 @@ public class Blog {
 			}
 			File[] files = templateDir.listFiles();
 			for (int f = 0; f < files.length; f++) {
-				if (false && files[f].isDirectory()) {   // Disabled because there are subdir with many subdirs.
+				if (files[f].isDirectory()) {
 					System.out.println("\nProcess subdir. " + files[f].getName());
 					processSTTemplates(files[f].getAbsolutePath(), destDirPath + "/" + files[f].getName());
 				} else if (files[f].getName().endsWith(TEMPLATE_EXTENSION)
@@ -192,6 +245,13 @@ public class Blog {
 		ST st = stDir.getInstanceOf(filename);
 		st.add("header", header);
 		st.add("footer", footer);
+		for (int p = 0; p < posts.size() && p < NUMBER_POSTS_ON_INDEX; p++) {
+			st.add("posts", posts.get(p));
+		}
+		String[] tagNames = new String[tags.size()];
+		tags.keySet().toArray(tagNames);
+		Arrays.sort(tagNames);
+		st.add("siteTags", tagNames);
 		// Output HTML file through ST.
 		File output = new File(destDirPath + "/" + filename + ".html");
 		FileWriter writer = new FileWriter(output);
@@ -199,5 +259,63 @@ public class Blog {
 		writer.flush();
 		writer.close();
 		System.out.println(" done.");
+	}
+	
+	private static void createTagsPages() throws IOException {
+		Iterator<String> iter = tags.keySet().iterator();
+		while (iter.hasNext()) {
+			String tagName = iter.next();
+			ArrayList<Post> posts = tags.get(tagName);
+			Collections.sort(posts, new Comparator<Post>() {
+				@Override
+				public int compare(Post p1, Post p2) {
+					// Sort in descending order.
+					return p1.getDate().compareTo(p2.getDate()) * -1;
+				}
+			});
+			// Instantiate the template.
+			STRawGroupDir stDir = new STRawGroupDir(baseDirPath + "/" + TEMPLATES, '$', '$');
+			ST st = stDir.getInstanceOf("tag");
+			st.add("header", header);
+			st.add("footer", footer);
+			st.add("tag", tagName);
+			st.add("posts", posts);
+			// Output HTML file through ST.
+			File output = new File(baseDirPath + WEB_GEN + "/tags/" + tagName + ".html");
+			FileWriter writer = new FileWriter(output);
+			writer.write(st.render());
+			writer.flush();
+			writer.close();
+		}
+	}
+
+	private static void createAtom() throws IOException, FeedException {
+		SyndFeed feed = new SyndFeedImpl();
+		feed.setFeedType(FEED_TYPE);
+		feed.setTitle("MAR9000 posts feed.");
+		feed.setLink("http://www.mar9000.org");
+		feed.setDescription("Master feed of posts from mar9000.org .");
+		//
+		List<SyndEntry> entries = new ArrayList<SyndEntry>();
+		for (Post post: posts) {
+			SyndEntry entry;
+			SyndContent description;
+			//
+			entry = new SyndEntryImpl();
+			entry.setTitle(post.getTitle());
+			entry.setLink("http://www.mar9000.org/bliki/" + post.getUrl());
+			entry.setPublishedDate(post.getDate());
+			description = new SyndContentImpl();
+			description.setType("text/html");
+			description.setValue(post.getSummary() + post.getContent());
+			entry.setDescription(description);
+			//
+			entries.add(entry);
+		}
+		feed.setEntries(entries);
+		Writer writer = new FileWriter(baseDirPath + "/" + WEB_GEN + "/" + FEED_FILENAME);
+		SyndFeedOutput output = new SyndFeedOutput();
+		output.output(feed,writer);
+		writer.close();		
 	}
 }

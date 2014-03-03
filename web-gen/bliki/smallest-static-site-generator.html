@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Header.   -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Marco LOMBARDO">
+  <title>The MAR9000's eye</title>
+  
+  <!-- Fav icon -->
+  <link rel="icon" href="/images/favicon.png">
+  <link rel="shortcut icon" href="/images/favicon.png">
+  
+  <!-- CSS -->
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Blog CSS from bootstrap.   -->
+  <link href="/css/blog.css" rel="stylesheet">
+  <!-- My CSS.   -->
+  <link href="/css/mar9000.css" rel="stylesheet">
+  <!-- Font Awesome.   -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <!-- In line CSS.   -->
+  <style id="holderjs-style" type="text/css">
+  </style>
+</head>
+
+<body>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item" href="/index.html">Home</a>
+          <a class="blog-nav-item" href="/about.html">About</a>
+          <a class="blog-nav-item" href="/ithaca.html">Ithaca</a>
+          <a class="blog-nav-item" href="/tags/index.html">Tags</a>
+          <a class="blog-nav-item" href="/ilblogdigeronimo/">Il blog di Geronimo</a>
+          <a class="blog-nav-item" href="/posts.atom"><i class="fa fa-rss"></i></a>
+        </nav>
+      </div>
+    </div>
+    
+    <!-- Header end.   -->
+    
+
+<!-- Content.   -->
+<div class="container">
+  <div class="row">
+
+    <!-- Left.   -->
+    <div class="col-sm-8 blog-main">
+        <div class="blog-post">
+
+          <h2 class="blog-post-title"> The smallest static site generator </h2>
+          <!-- Author.   -->
+          <div class="author-section">
+            <p class="photo"> <img src="/images/ml.png" /> </p>
+            <small> <p class="name"> Marco LOMBARDO<br/>
+                                     2014-03-03 </p> </small>
+          </div> <p style="clear: both;" />
+<!-- Abstract: should stay here because if indented a <pre> section does not shows correctly.   -->
+<p>Now that I can write posts in HTML and in Markdown what is missing to create the smallest static web generator we can imagine?</p>
+<!-- Content.   -->
+<p>In fact this is only the first list of <em>missing features</em>, for example <a href="http://octopress.org">Octopress</a> has a beautiful syntax highlight, anyway... I asked to myself the minimum to be able to publish and organize content and let people follow my blog if interesting. So:</p>
+<ul>
+  <li>my index page is almost empty, I'll publish here last posts abstract to drive the reader.</li>
+  <li>already with the index page I could write posts and readers find posts on the index. However minimum search capabilities can be implemented with tags even if they will become useful only with several posts.</li>
+  <li>Atom feed is the minimum to <em>keep in touch</em> with readers.</li>
+</ul><h3>Abstract on the index page</h3><p>This will require for sure to order posts with respect to their date to publish only some of last published ones. To do this I will collect posts metadata during posts processing. As you can imagine this will be used also when we will implement the tags pages. The bootstrap construct used is the <em>description lists</em>. I already had an index template I modified it and added a new composite attribute to the StringTemplate instance used.</p><h3>Tags pages</h3><p>While processing posts I collect data about posts into a <code>ArrayList</code> used by <code>Blog.createTagsPages()</code>. A main page with all tags together with a page for each tag get created by the above method.</p><h3>Atom feed</h3><p>Atom feed is created from the same data used for the main index page. When I searched for a library to generate an <code>atom</code> file from Java the surprise was that there are not so much alternatives. Finally I have chosen <a href="https://github.com/rometools/rome">ROME</a> to do not chose the Apache alternative Abdera that seemed to me to have more dependencies. The documentation is not that big nevertheless I found the example I was looking for.</p><p>At this point I also added <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> to add the feed symbol on the navigation bar.</p><p>As a final note I have chosen to implement Atom instead of RSS because it's a newer format.</p>
+
+        </div> <!-- /.blog-post -->
+    </div> <!-- /.blog-main -->
+
+    <!-- Right.   -->
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar-module sidebar-module-inset">
+            <h4>Tags:</h4>
+            <p>
+                          <a href="/tags/code generation.html"><span class="label label-primary">code generation</span></a>
+                          <a href="/tags/RSS.html"><span class="label label-primary">RSS</span></a>
+
+            </p>
+        </div>
+          <!-- Commented out, to be implemented on the index page.
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">January 2014</a></li>
+              <li><a href="#">December 2013</a></li>
+              <li><a href="#">November 2013</a></li>
+              <li><a href="#">October 2013</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>  -->
+    </div><!-- /.blog-sidebar -->
+
+  </div>   <!-- row.   -->
+</div>   <!-- /.container -->
+
+<!-- Footer.   -->
+<!-- Footer start.   -->
+<div class="blog-footer">
+  <p>Copyright mar9000.org 2011-2014.</p>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/jquery/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+</body></html>

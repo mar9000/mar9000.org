@@ -22,6 +22,8 @@
   <link href="/css/blog.css" rel="stylesheet">
   <!-- My CSS.   -->
   <link href="/css/mar9000.css" rel="stylesheet">
+  <!-- Font Awesome.   -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <!-- In line CSS.   -->
   <style id="holderjs-style" type="text/css">
   </style>
@@ -34,7 +36,9 @@
           <a class="blog-nav-item" href="/index.html">Home</a>
           <a class="blog-nav-item" href="/about.html">About</a>
           <a class="blog-nav-item" href="/ithaca.html">Ithaca</a>
+          <a class="blog-nav-item" href="/tags/index.html">Tags</a>
           <a class="blog-nav-item" href="/ilblogdigeronimo/">Il blog di Geronimo</a>
+          <a class="blog-nav-item" href="/posts.atom"><i class="fa fa-rss"></i></a>
         </nav>
       </div>
     </div>
@@ -54,6 +58,30 @@
     <h1>Just one more experiment!</h1>
     <p>Want to know how it is organized? <a href="/site-organization.html">Read more &raquo;</a></p>
   </div>
+
+  <hr/>
+
+  <div class="row">
+    <div class="col-md-9"><h2>Blog posts</h2></div>
+  </div>
+
+  <dl class="dl-horizontal">
+        <dt>2014-03-03</dt>
+        <dd><b><a href="bliki/smallest-static-site-generator.html">The smallest static site generator</a></b><br/> <p>Now that I can write posts in HTML and in Markdown what is missing to create the smallest static web generator we can imagine?</p> </dd>
+        <dt>2014-03-02</dt>
+        <dd><b><a href="bliki/adding-a-markup-language.html">Adding a markup language</a></b><br/> <p>The previous post introduces a small language to define post files and in this project you can find some java classes to transform them into a small blog, based on bootstrap. The first improvement I see that was missing it's a markup language to speed up writing of posts. I decide to investigate a bit on <em>static site generators</em> like for example <a href="http://jekyllrb.com">Jekyll</a>, actually the one used by github.</p> </dd>
+        <dt>2014-02-15</dt>
+        <dd><b><a href="bliki/post-n1.html">Post #1</a></b><br/> <p>If you are a Java developer and you are interested in Domain Specific Language (DSL)
+    and Code Generation, soon or late you are going to play a bit with <a href="http://www.antlr.org">ANTLR</a>.
+    In addition if you are such kind of person you will probably know the Martin Fowler
+    <a href="http://martinfowler.com/bliki/WhatIsaBliki.html">bliki</a>.
+    Now something personal: I in general dislike working with graphic tools when
+    I can do the same thing by coding and/or command line (who knows if in one of my next posts I will decide to
+    explain why). I also dislike to store into a database things that are much more comfortable into the
+    file system. All these reasons drive me to implement my own <i>bliki</i>. </p> </dd>
+
+  </dl>
+
 </div>   <!-- /.container -->
 
 <!-- Footer.   -->

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title>MAR9000 posts feed.</title>
+  <link rel="alternate" href="http://www.mar9000.org" />
+  <subtitle>Master feed of posts from mar9000.org .</subtitle>
+  <entry>
+    <title>The smallest static site generator</title>
+    <link rel="alternate" href="http://www.mar9000.org/bliki/smallest-static-site-generator.html" />
+    <author>
+      <name />
+    </author>
+    <updated>2014-03-03T21:00:00Z</updated>
+    <published>2014-03-03T21:00:00Z</published>
+    <summary type="html">&lt;p&gt;Now that I can write posts in HTML and in Markdown what is missing to create the smallest static web generator we can imagine?&lt;/p&gt;&lt;p&gt;In fact this is only the first list of &lt;em&gt;missing features&lt;/em&gt;, for example &lt;a href="http://octopress.org"&gt;Octopress&lt;/a&gt; has a beautiful syntax highlight, anyway... I asked to myself the minimum to be able to publish and organize content and let people follow my blog if interesting. So:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;my index page is almost empty, I'll publish here last posts abstract to drive the reader.&lt;/li&gt;
+  &lt;li&gt;already with the index page I could write posts and readers find posts on the index. However minimum search capabilities can be implemented with tags even if they will become useful only with several posts.&lt;/li&gt;
+  &lt;li&gt;Atom feed is the minimum to &lt;em&gt;keep in touch&lt;/em&gt; with readers.&lt;/li&gt;
+&lt;/ul&gt;&lt;h3&gt;Abstract on the index page&lt;/h3&gt;&lt;p&gt;This will require for sure to order posts with respect to their date to publish only some of last published ones. To do this I will collect posts metadata during posts processing. As you can imagine this will be used also when we will implement the tags pages. The bootstrap construct used is the &lt;em&gt;description lists&lt;/em&gt;. I already had an index template I modified it and added a new composite attribute to the StringTemplate instance used.&lt;/p&gt;&lt;h3&gt;Tags pages&lt;/h3&gt;&lt;p&gt;While processing posts I collect data about posts into a &lt;code&gt;ArrayList&lt;/code&gt; used by &lt;code&gt;Blog.createTagsPages()&lt;/code&gt;. A main page with all tags together with a page for each tag get created by the above method.&lt;/p&gt;&lt;h3&gt;Atom feed&lt;/h3&gt;&lt;p&gt;Atom feed is created from the same data used for the main index page. When I searched for a library to generate an &lt;code&gt;atom&lt;/code&gt; file from Java the surprise was that there are not so much alternatives. Finally I have chosen &lt;a href="https://github.com/rometools/rome"&gt;ROME&lt;/a&gt; to do not chose the Apache alternative Abdera that seemed to me to have more dependencies. The documentation is not that big nevertheless I found the example I was looking for.&lt;/p&gt;&lt;p&gt;At this point I also added &lt;a href="http://fortawesome.github.io/Font-Awesome/"&gt;Font Awesome&lt;/a&gt; to add the feed symbol on the navigation bar.&lt;/p&gt;&lt;p&gt;As a final note I have chosen to implement Atom instead of RSS because it's a newer format.&lt;/p&gt;</summary>
+    <dc:date>2014-03-03T21:00:00Z</dc:date>
+  </entry>
+  <entry>
+    <title>Adding a markup language</title>
+    <link rel="alternate" href="http://www.mar9000.org/bliki/adding-a-markup-language.html" />
+    <author>
+      <name />
+    </author>
+    <updated>2014-03-01T23:00:00Z</updated>
+    <published>2014-03-01T23:00:00Z</published>
+    <summary type="html">&lt;p&gt;The previous post introduces a small language to define post files and in this project you can find some java classes to transform them into a small blog, based on bootstrap. The first improvement I see that was missing it's a markup language to speed up writing of posts. I decide to investigate a bit on &lt;em&gt;static site generators&lt;/em&gt; like for example &lt;a href="http://jekyllrb.com"&gt;Jekyll&lt;/a&gt;, actually the one used by github.&lt;/p&gt;&lt;p&gt;I started searching for &lt;em&gt;static site generator&lt;/em&gt; or &lt;em&gt;static web framework&lt;/em&gt; and I found among others: &lt;a href="http://jekyllrb.com"&gt;Jekyll&lt;/a&gt;, &lt;a href="http://blog.getpelican.com"&gt;Pelican&lt;/a&gt;, &lt;a href="http://octopress.org"&gt;Octopress&lt;/a&gt;, &lt;a href="http://assemble.io/"&gt;Assemble&lt;/a&gt;, &lt;a href="http://nanoc.ws"&gt;Nanos&lt;/a&gt;, &lt;a href="http://wintersmith.io"&gt;Wintersmith&lt;/a&gt;, &lt;a href="http://phrozn.info/en/"&gt;Phrozn&lt;/a&gt;, &lt;a href="https://github.com/koenbok/Cactus/"&gt;Cactus&lt;/a&gt;, &lt;a href="http://zespia.tw/hexo/"&gt;Hexo&lt;/a&gt;, &lt;a href="http://lkdjiin.github.io/genit/"&gt;Genit&lt;/a&gt;.&lt;br/&gt;One based on java is &lt;a href="http://jbake.org"&gt;JBake&lt;/a&gt;.&lt;br/&gt;There is a comprehensive list &lt;a href="http://staticgen.com/"&gt;here&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;At this point I asked to myself what I would like to do in the future: use a fully featured static site generator or continue to use my code. I decided for the ladder because the blog itself is not my first goal, instead I would also to experiment with grammars and code generation. So I looked at the above projects more as examples of files organization than projects to use in practice. I will add feature one by one as soon as I will need something not yet implemented.&lt;/p&gt;&lt;p&gt;Write directly in HTML is time consuming, so the first thing to implement is the possibility to use &lt;a href="http://daringfireball.net/projects/markdown/"&gt;Markdown&lt;/a&gt; instead of plain HTML, a list of implementations is maintained &lt;a href="http://www.w3.org/community/markdown/wiki/MarkdownImplementations"&gt;here&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Between others &lt;a href="http://markdown.tautua.org/index.html"&gt;MarkdownPapers&lt;/a&gt; use JavaCC, and &lt;a href="https://github.com/sirthias/pegdown"&gt;PegDown&lt;/a&gt; is derived from a PEG grammar. I chose the ladder because of better documentation.&lt;/p&gt;&lt;p&gt;After adding some jars I was able to write my posts using &lt;em&gt;markdown&lt;/em&gt;. Now post files with extension &lt;code&gt;.md&lt;/code&gt; are parsed as post but &lt;em&gt;abstract&lt;/em&gt; and &lt;em&gt;content&lt;/em&gt; are transformed with PegDown.&lt;br/&gt;This post is the first of this kind, check out &lt;code&gt;adding-markup-language.md&lt;/code&gt; .&lt;br/&gt;This extension has also the side effect that posts written in markdown can be edited with syntax highlight if opened with a specialized editor.&lt;/p&gt;&lt;p&gt;The java part had very few modifications, for example to process the &lt;em&gt;content&lt;/em&gt; I just needed, see the &lt;a href="https://github.com/mar9000/mar9000.org/blob/master/src/org/mar9000/blog/Blog.java"&gt;Blog&lt;/a&gt; class:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if (post.getName().endsWith(MARKDOWN)) {
+    content = new PegDownProcessor().markdownToHtml(content);
+}
+&lt;/code&gt;&lt;/pre&gt;</summary>
+    <dc:date>2014-03-01T23:00:00Z</dc:date>
+  </entry>
+  <entry>
+    <title>Post #1</title>
+    <link rel="alternate" href="http://www.mar9000.org/bliki/post-n1.html" />
+    <author>
+      <name />
+    </author>
+    <updated>2014-02-14T23:00:00Z</updated>
+    <published>2014-02-14T23:00:00Z</published>
+    <summary type="html">&lt;p&gt;If you are a Java developer and you are interested in Domain Specific Language (DSL)
+and Code Generation, soon or late you are going to play a bit with &lt;a href="http://www.antlr.org"&gt;ANTLR&lt;/a&gt;.
+In addition if you are such kind of person you will probably know the Martin Fowler
+&lt;a href="http://martinfowler.com/bliki/WhatIsaBliki.html"&gt;bliki&lt;/a&gt;.
+Now something personal: I in general dislike working with graphic tools when
+I can do the same thing by coding and/or command line (who knows if in one of my next posts I will decide to
+explain why). I also dislike to store into a database things that are much more comfortable into the
+file system. All these reasons drive me to implement my own &lt;i&gt;bliki&lt;/i&gt;. &lt;/p&gt;&lt;p&gt;I have given also an opportunity to WordPress, indeed a spanish blog I translate to italian is
+maintained with WordPress, but let's speak about the static part of this site.&lt;/p&gt;
+&lt;h2&gt;The first (bad) grammar&lt;/h2&gt;
+&lt;p&gt;Because I aim to experiment with ANTLR I decided to wrote a small language to define a blog post. Once you have
+such a language and you can parse your posts you can use this data to:
+  &lt;ul&gt;
+    &lt;li&gt;create a main page with only last posts.&lt;/li&gt;
+    &lt;li&gt;create a page to show only posts tagged with a specific label.&lt;/li&gt;
+    &lt;li&gt;create your RSS feed.&lt;/li&gt;
+  &lt;/ul&gt;
+A post will be something like:
+&lt;pre&gt;
+title: &lt;something&gt;
+url: &lt;url to use for the post&gt;
+date: 
+tags: antlr,java, ..
+content: the HTML part of the post
+&lt;/pre&gt;
+&lt;/p&gt;
+&lt;p&gt; If you are new to ANTLR the first grammar will be:
+&lt;pre&gt;
+post: title url date tags content;
+
+title: 'title:' LINE;
+url: 'url:' LINE;
+date: 'date:' DIGIT DIGIT DIGIT DIGIT '-' DIGIT DIGIT '-' DIGIT DIGIT NL;
+tags: 'tags:' WORDS? (',' WORDS)? '\n';
+content: 'content:' .*;
+
+DIGIT: [0-9];
+WORDS: ([a-zA-Z0-9] | ' ')+;
+LINE: ~[\r\n]* NL;
+NL: '\r'? '\n';
+&lt;/pre&gt;
+If you try this grammar with:
+&lt;pre&gt;
+$ antlr4 BadBlog.g4
+$ javac *.java
+$ grun BadBlog post -tokens test1.post
+&lt;/pre&gt;
+You will receive some errors like this &lt;i&gt;line 1:0 missing 'title:' at 'title: something\n'&lt;/i&gt;.
+Why ANTLR says &lt;i&gt;title:&lt;/i&gt; is missing if it's actually inside the file?
+&lt;/p&gt;
+
+&lt;h2&gt;The first good grammar&lt;/h2&gt;
+&lt;p&gt;This fact is stated at page 15 of
+&lt;a href="http://pragprog.com/book/tpantlr2/the-definitive-antlr-4-reference"&gt;The Definitive ANTLR 4 Reference&lt;/a&gt;:
+&lt;blockquote&gt;
+  &lt;p&gt;Note that lexers try to match the longest string possible&lt;/p&gt;
+&lt;/blockquote&gt;
+Out lexer consume &lt;i&gt;title:&lt;/i&gt; while matching the &lt;code&gt;LINE&lt;/code&gt; rule, and this is visible from the preceeding command:
+&lt;pre&gt;
+[@0,0:18='title: something\n',&lt;11&gt;,1:0]
+&lt;/pre&gt;
+The token 11 is &lt;code&gt;LINE&lt;/code&gt;.
+&lt;/p&gt;
+&lt;p&gt;The solution is to implement everything at lexer level (I introduce "..." to end the content rule):
+&lt;pre&gt;
+post: TITLE URL DATE TAGS CONTENT;
+
+TITLE: 'title:' .*? NL;
+URL: 'url:' .*? NL;
+DATE: 'date:' .*? NL;
+TAGS: 'tags:' .*? NL;
+CONTENT: 'content:' .*? NL '...' NL;
+NL : '\r'? '\n';
+&lt;/pre&gt;
+If you test this you will see that the grammar successfully parse the file at the
+price of having also starting and ending string when accessing the AST, e.g. TITLE().getText()
+will contains also &lt;i&gt;title:&lt;/i&gt;.
+&lt;/p&gt;
+
+&lt;h2&gt;The &lt;i&gt;island&lt;/i&gt; grammar&lt;/h2&gt;
+&lt;p&gt;
+With our grammar we want basically to parse:
+  &lt;ul&gt;
+    &lt;li&gt;a tag, like title:, associated with one line.&lt;/li&gt;
+    &lt;li&gt;a tag, like content:, associated with more lines.&lt;/li&gt;
+    &lt;li&gt;a list of words, like tags: .&lt;/li&gt;
+  &lt;/ul&gt;
+This is our &lt;i&gt;meta-model&lt;/i&gt; expressed formally into the grammar we are going to write.
+&lt;/p&gt;
+&lt;p&gt;
+The Lexer respect rules precedence but here the problem is that the &lt;code&gt;LINE&lt;/code&gt; rule
+has no start condition and once it starts will match for instance always more chars than &lt;code&gt;WORDS&lt;/code&gt;.
+The solution are &lt;i&gt;lexer modes&lt;/i&gt; but for this you should split your grammar in a lexer and parser grammars,
+see BlogLexer.g4 and BlogParser.g4 . You need a sequence that start a mode and a sequence that switch back to the
+default mode. Inside a mode you have different lexer rules, for instance after &lt;i&gt;title:&lt;/i&gt; we match chars until a
+new line while after &lt;i&gt;content:&lt;/i&gt; the new line char alone has nothing special and we match a longer sequence
+as you can see reading the grammar. &lt;br/&gt;
+The only remark is how we match a long sequence of chars, the &lt;code&gt;CH&lt;/code&gt; rule, into the lexer that the parser
+join together into a &lt;code&gt;chars&lt;/code&gt; object.
+&lt;/p&gt;
+&lt;p&gt;I created an eclipse project for this blog, you can play with my grammar:
+  &lt;ul&gt;
+    &lt;li&gt;use &lt;code&gt;compile-lexer.launch&lt;/code&gt; to compile the lexer, then&lt;/li&gt;
+    &lt;li&gt;use &lt;code&gt;compile-parser.launch&lt;/code&gt; to compile the parser, then&lt;/li&gt;
+    &lt;li&gt;refresh the eclipse project&lt;/li&gt;
+    &lt;li&gt;create the html from templates using &lt;code&gt;update-web-gen.launch&lt;/code&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+There is also a &lt;code&gt;grun.launch&lt;/code&gt; to have from eclipse the same output of &lt;code&gt;grun&lt;/code&gt; command, but
+while developing a new grammar, at least when it's a small grammar, it's easier from the command line. &lt;br/&gt;
+The rest of the code at the moment are simple code that parses post files and output HTML files
+using &lt;a href="http://www.stringtemplate.org/"&gt;StringTemplate&lt;/a&gt;.
+&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+When you develop a grammar usually you look at the final result that is produced by the parser,
+however you have to don't forget that it receives what the lexer prepares.</summary>
+    <dc:date>2014-02-14T23:00:00Z</dc:date>
+  </entry>
+</feed>
+
