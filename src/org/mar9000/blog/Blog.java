@@ -60,6 +60,7 @@ public class Blog {
 	public static final String TEMPLATE_EXTENSION = ".st";
 	public static final String TEMPLATES = "/templates";
 	public static final String WEB_TEMPLATE = "/web-template";
+	public static final String POSTS = "/posts";
 	public static final String WEB_GEN = "/web-gen";
 	public static final String HEADER = "header.html";
 	public static final String FOOTER = "footer.html";
@@ -91,9 +92,9 @@ public class Blog {
 				header = readFileAsString(baseDirPath + TEMPLATES + "/" + HEADER);
 				footer = readFileAsString(baseDirPath + TEMPLATES + "/" + FOOTER);
 				// Process posts.
-				System.out.println("Source dir. is " + baseDirPath + "/posts");
-				System.out.println("Target dir. is " + baseDirPath + "/web\n");
-				processPosts(args[0] + "/posts", baseDirPath + "/web-gen/bliki");
+				System.out.println("Source dir. is " + baseDirPath + POSTS);
+				System.out.println("Target dir. is " + baseDirPath + WEB_GEN + "\n");
+				processPosts(args[0] + POSTS, baseDirPath + WEB_GEN + "/bliki");
 				Collections.sort(posts, new Comparator<Post>() {
 					@Override
 					public int compare(Post p1, Post p2) {
@@ -221,11 +222,16 @@ public class Blog {
 			}
 			File[] files = templateDir.listFiles();
 			for (int f = 0; f < files.length; f++) {
+				// The tag template is used to render is tag page and is not a template to process here.
+				// Same for post.st .
+				if (files[f].getName().equals("tag.st") || files[f].getName().equals("post.st"))
+					continue;
+				//
 				if (files[f].isDirectory()) {
-					System.out.println("\nProcess subdir. " + files[f].getName());
+					System.out.println("\nProcess subdirectory " + files[f].getName() + " ...");
 					processSTTemplates(files[f].getAbsolutePath(), destDirPath + "/" + files[f].getName());
-				} else if (files[f].getName().endsWith(TEMPLATE_EXTENSION)
-						&& !files[f].getName().equals("post.st")) {
+					System.out.println("        subdirectory " + files[f].getName() + " processed.\n");
+				} else if (files[f].getName().endsWith(TEMPLATE_EXTENSION)) {
 					processSTTemplate(files[f], destDirPath);
 				}
 			}

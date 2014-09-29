@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/mar9000/lib/antlr-4.0-complete.jar"/>
+<listEntry value="/mar9000/lib/antlr-4.2-complete.jar"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.antlr.v4.Tool"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-lib src/org/mar9000/blog/grammar -package org.mar9000.blog.grammar  src/org/mar9000/blog/grammar/BlogParser.g4"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-lib src/org/mar9000/blog/grammar -visitor -package org.mar9000.blog.grammar  src/org/mar9000/blog/grammar/BlogParser.g4"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="mar9000"/>
 </launchConfiguration>

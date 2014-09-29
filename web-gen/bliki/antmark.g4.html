@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Header.   -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Marco LOMBARDO">
+  <title>The MAR9000's eye</title>
+  
+  <!-- Fav icon -->
+  <link rel="icon" href="/images/favicon.png">
+  <link rel="shortcut icon" href="/images/favicon.png">
+  
+  <!-- CSS -->
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Blog CSS from bootstrap.   -->
+  <link href="/css/blog.css" rel="stylesheet">
+  <!-- My CSS.   -->
+  <link href="/css/mar9000.css" rel="stylesheet">
+  <!-- Font Awesome.   -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <!-- In line CSS.   -->
+  <style id="holderjs-style" type="text/css">
+  </style>
+</head>
+
+<body>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item" href="/index.html">Home</a>
+          <a class="blog-nav-item" href="/about.html">About</a>
+          <a class="blog-nav-item" href="/ithaca.html">Ithaca</a>
+          <a class="blog-nav-item" href="/tags/index.html">Tags</a>
+          <a class="blog-nav-item" href="/ilblogdigeronimo/">Il blog di Geronimo</a>
+          <a class="blog-nav-item" href="/posts.atom"><i class="fa fa-rss"></i></a>
+        </nav>
+      </div>
+    </div>
+    
+    <!-- Header end.   -->
+    
+
+<!-- Content.   -->
+<div class="container">
+  <div class="row">
+
+    <!-- Left.   -->
+    <div class="col-sm-8 blog-main">
+        <div class="blog-post">
+
+          <h2 class="blog-post-title"> ANTLR4 grammar for Markdown </h2>
+          <!-- Author.   -->
+          <div class="author-section">
+            <p class="photo"> <img src="/images/ml.png" /> </p>
+            <small> <p class="name"> Marco LOMBARDO<br/>
+                                     2014-09-01 </p> </small>
+          </div> <p style="clear: both;" />
+<!-- Abstract: should stay here because if indented a <pre> section does not shows correctly.   -->
+<p><a href="http://daringfireball.net/projects/markdown/">Markdown</a> is today used in several place including this blog.<br/><a href="http://www.antlr.org">ANTLR</a> is also used, almost, everywhere where you need a parser.<br/>So to learn ANTLR I have chosen to try teach ANTLR how to parse Markdown syntax. This task has been much more hard then I expected.</p>
+<!-- Content.   -->
+<p>The result has been published as the <a href="https://github.com/mar9000/antmark/">ANTMark</a> project.</p><p>The main problem is that everything is context sensitive, including newlines.</p><p>The hardest thing to parse were ordered and unordered lists. Here there is another problem: there is not reference syntax definition for Markdown a different implementations parse nested ordered or unordered list differently.</p><p>To force ANTLR to parse Markdown the result as not as fast as I expected, I mean it's pretty slow and I had to break long test cases in smaller one otherwise the parsing never ends.</p><h2>State of the art</h2><p>Under <code>tests</code> you can find 143 tests that can be executed with the <code>MarkdownTest</code> class.<br/>There are some homemade tests, almost all the Markdown default tests (version 1.0.2), and all tests of the <a href="https://github.com/karlcow/markdown-testsuite/">markdown-testsuite</a>.<br/>Due to the problem highlighted below the project is at the moment only an exercise of style.</p><h2>Main problems</h2><p>I don't know with other parsing engines, but with ANTLR4 I spent lot of time parsing lists. The main problem with ANTLR4 is probably that one would have a stopping rule for rules such as <code>(...)*?</code> that forces the parser to stop to consume tokens.<br/>ANTLR4 stops to consume token depending on what follow the example rule above, but this in my grammar was not enough.</p><p>So I used semantic predicates, but the parser <strong>is very very slow</strong>, it's not able to parse a file that contains more than 2 lists, I also tried to inspect the generated DSA but it was for me out of reach.<br/>Adding more lists causes that the parsing never ends. I hope this will have some interest for the ANTLR gurus.</p><h2>Use cases</h2><p>After you have cloned the project, import it into eclipse, than you can:</p>
+<ul>
+  <li>compile the <code>MarkdownLexer.g4</code> grammar with <em>compile-lexer</em> run/debug configuration.</li>
+  <li>compile the <code>MarkdownParser.g4</code> grammar with <em>compile-parser</em> run/debug configuration.</li>
+  <li>open the class <code>MarkdownTest</code> and <em>Run As -&gt; JUnit Test</em> from the right click menu.</li>
+</ul><h2>Future directions</h2><p><strong>Use a <em>scanner less</em> gramar</strong>: unfortunately almost at the end of my work I realized that the lexer was not doing that much so a <em>scanner less</em> grammar could be probably adopted easily. In addition the semantic predicates I wrote all of them act inspecting the token stream. In a <em>scanner less</em> scenario should be easier to inspect a <code>CharStream</code>.</p><p><strong>Parser modularization</strong>: in case no global solution exists to build a real parser for the whole language, one could try to first build a parser for the block structure of Markdown, for example identifying first lists, verbatim, heading..., than parse each block content to parser emph, strong, links and all the other span elements.<br/>I already used this approach for blockquotes: here on each line the starting tokens <code>&gt;</code> are removed and the result is passed to an new instance of the parser. Probably some fixes are required in case of presence of <em>reference links</em> into the blockquote.</p><h2>Support/discussions</h2><p>Because the project is just started I think a generic group for discussions and comments is enough: <a href="https://groups.google.com/forum/#!forum/antmark-discussion">https://groups.google.com/forum/#!forum/antmark-discussion</a>.</p>
+
+        </div> <!-- /.blog-post -->
+    </div> <!-- /.blog-main -->
+
+    <!-- Right.   -->
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar-module sidebar-module-inset">
+            <h4>Tags:</h4>
+            <p>
+                          <a href="/tags/antlr.html"><span class="label label-primary">antlr</span></a>
+                          <a href="/tags/markdown.html"><span class="label label-primary">markdown</span></a>
+                          <a href="/tags/peg.html"><span class="label label-primary">peg</span></a>
+
+            </p>
+        </div>
+          <!-- Commented out, to be implemented on the index page.
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">January 2014</a></li>
+              <li><a href="#">December 2013</a></li>
+              <li><a href="#">November 2013</a></li>
+              <li><a href="#">October 2013</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>  -->
+    </div><!-- /.blog-sidebar -->
+
+  </div>   <!-- row.   -->
+</div>   <!-- /.container -->
+
+<!-- Footer.   -->
+<!-- Footer start.   -->
+<div class="blog-footer">
+  <p>Copyright mar9000.org 2011-2014.</p>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/jquery/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+</body></html>

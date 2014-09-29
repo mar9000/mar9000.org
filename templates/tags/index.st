@@ -10,7 +10,7 @@ $header$
   <h2>Tags</h2>
   
   $siteTags:{tag |
-    <a href="/tags/$tag$.html">$tag$</a> &nbsp;· 
+    <a class="btn btn-info" href="$tag$.html" role="button">$tag$</a> &nbsp;·
   }$
   
 </div>   <!-- /.container -->
