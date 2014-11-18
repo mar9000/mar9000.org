@@ -55,12 +55,18 @@ import com.sun.syndication.io.SyndFeedOutput;
 
 public class Blog {
 	
+	public static final int POST_TYPE= 0;
+	public static final int PHOTO_TYPE= 1;
+	public static final String POST_TEMPLATE = "post";
+	public static final String PHOTO_POST_TEMPLATE = "photo-post";
+	
 	public static final String MARKDOWN = ".md";
 	public static final String EXTENSIONS = ".post,.html," + MARKDOWN;
 	public static final String TEMPLATE_EXTENSION = ".st";
 	public static final String TEMPLATES = "/templates";
 	public static final String WEB_TEMPLATE = "/web-template";
 	public static final String POSTS = "/posts";
+	public static final String PHOTO_POSTS = "/photo-posts";
 	public static final String WEB_GEN = "/web-gen";
 	public static final String HEADER = "header.html";
 	public static final String FOOTER = "footer.html";
@@ -94,7 +100,10 @@ public class Blog {
 				// Process posts.
 				System.out.println("Source dir. is " + baseDirPath + POSTS);
 				System.out.println("Target dir. is " + baseDirPath + WEB_GEN + "\n");
-				processPosts(args[0] + POSTS, baseDirPath + WEB_GEN + "/bliki");
+				processPosts(args[0] + POSTS, baseDirPath + WEB_GEN + "/bliki", POST_TYPE);
+				// Process photo posts.
+				processPosts(args[0] + PHOTO_POSTS, baseDirPath + WEB_GEN + "/photo-posts", PHOTO_TYPE);
+				// Sort all posts.
 				Collections.sort(posts, new Comparator<Post>() {
 					@Override
 					public int compare(Post p1, Post p2) {
@@ -129,7 +138,7 @@ public class Blog {
 		return fileData.toString();
 	}
 	
-	private static String processPosts(String postsDirPath, String webDirPath) throws IOException{
+	private static String processPosts(String postsDirPath, String webDirPath, int type) throws IOException{
 		String message = "OK";
 		try {
 			File postsDir = new File(postsDirPath);
@@ -141,9 +150,9 @@ public class Blog {
 				File file = files[f];
 				if (file.isDirectory()) {
 					System.out.println("\nProcess subdir. " + file.getName());
-					processPosts(file.getAbsolutePath(), webDirPath + "/" + file.getName());
+					processPosts(file.getAbsolutePath(), webDirPath + "/" + file.getName(), type);
 				} else if (EXTENSIONS.indexOf(file.getName().substring(file.getName().lastIndexOf("."))) != -1) {
-					processPost(file, webDirPath);
+					processPost(file, webDirPath, type);
 				}
 			}
 		} catch (Exception e) {
@@ -153,7 +162,7 @@ public class Blog {
 		return message;
 	}
 
-	private static void processPost(File post, String webDirPath) throws IOException, ParseException {
+	private static void processPost(File post, String webDirPath, int type) throws IOException, ParseException {
 		System.out.print("Process: " + post.getAbsolutePath() + " ...");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		
@@ -166,7 +175,7 @@ public class Blog {
 		posts.add(postMetadata);
 		// Instantiate the template.
 		STRawGroupDir stDir = new STRawGroupDir(baseDirPath + "/templates", '$', '$');
-		ST st = stDir.getInstanceOf("post");
+		ST st = stDir.getInstanceOf(type == POST_TYPE ? POST_TEMPLATE : PHOTO_POST_TEMPLATE);
 		st.add("header", header);
 		st.add("footer", footer);
 		//
@@ -224,7 +233,8 @@ public class Blog {
 			for (int f = 0; f < files.length; f++) {
 				// The tag template is used to render is tag page and is not a template to process here.
 				// Same for post.st .
-				if (files[f].getName().equals("tag.st") || files[f].getName().equals("post.st"))
+				if (files[f].getName().equals("tag.st") || files[f].getName().equals("post.st")
+						|| files[f].getName().equals("photo-post.st"))
 					continue;
 				//
 				if (files[f].isDirectory()) {
