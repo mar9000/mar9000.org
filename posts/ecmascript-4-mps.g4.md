@@ -1,7 +1,7 @@
-title:New ECMAScript4MP project
-url:ecmascript-4-mps.html
+title:New ECMAScript4MPS project
+url:ecma-script-4-mps.html
 date:2015-02-12 14:00
-tags:MPS,ecmascript,javascript
+tags:MPS,ECMA Script,javascript
 abstract:There are several strategies for code generation. The one used by [MPS](https://www.jetbrains.com/mps/)
 could be called *no code generation* strategy. In fact the suggested implementation for code generation
 is first to transform models in your language to models in the target language, or if you prefer first to transform
