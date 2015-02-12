@@ -50,26 +50,15 @@
 
 <!-- Content.   -->
 <div class="container">
-  <h2>Tags</h2>
+  <div class="row">
+    <div class="col-md-9"><h2>tagged by: ecmascript</h2></div>
+  </div>
 
-      <a class="btn btn-info" href="DSL.html" role="button">DSL</a> &nbsp;·
-      <a class="btn btn-info" href="MPS.html" role="button">MPS</a> &nbsp;·
-      <a class="btn btn-info" href="RSS.html" role="button">RSS</a> &nbsp;·
-      <a class="btn btn-info" href="UI.html" role="button">UI</a> &nbsp;·
-      <a class="btn btn-info" href="antlr.html" role="button">antlr</a> &nbsp;·
-      <a class="btn btn-info" href="code generation.html" role="button">code generation</a> &nbsp;·
-      <a class="btn btn-info" href="ecmascript.html" role="button">ecmascript</a> &nbsp;·
-      <a class="btn btn-info" href="javascript.html" role="button">javascript</a> &nbsp;·
-      <a class="btn btn-info" href="jekyll.html" role="button">jekyll</a> &nbsp;·
-      <a class="btn btn-info" href="markdown.html" role="button">markdown</a> &nbsp;·
-      <a class="btn btn-info" href="markup.html" role="button">markup</a> &nbsp;·
-      <a class="btn btn-info" href="mbeddr.html" role="button">mbeddr</a> &nbsp;·
-      <a class="btn btn-info" href="peg.html" role="button">peg</a> &nbsp;·
-      <a class="btn btn-info" href="pelican.html" role="button">pelican</a> &nbsp;·
-      <a class="btn btn-info" href="photo.html" role="button">photo</a> &nbsp;·
-      <a class="btn btn-info" href="plantuml.html" role="button">plantuml</a> &nbsp;·
-      <a class="btn btn-info" href="sunset.html" role="button">sunset</a> &nbsp;·
+  <dl class="dl-horizontal">
+        <dt>2015-02-12</dt>
+        <dd><b><a href="/bliki/ecmascript-4-mps.html">New ECMAScript4MP project</a></b><br/> <p>There are several strategies for code generation. The one used by <a href="https://www.jetbrains.com/mps/">MPS</a> could be called <em>no code generation</em> strategy. In fact the suggested implementation for code generation is first to transform models in your language to models in the target language, or if you prefer first to transform AST representation of your program into AST representation of target language. Then models from a real language, for example Java, are translated to text. This means that only construct, like <em>if-then-else</em>, of language that one can compile or execute, like Java, have a place where one say how to translate them to text, in MPS called <em>TextGen</em> aspect.</p><p>MPS gives you for free a language called <em>baseLanguge</em> that transform seamlessly to Java. Whereas one of my target languages is Javascript, so I created this new MPS language. The new project is hosted on <a href="https://github.com/mar9000/ecmascript4mps">github</a>.</p> </dd>
 
+  </dl>
 
 </div>   <!-- /.container -->
 

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Header.   -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Marco LOMBARDO">
+  <title>The MAR9000's eye</title>
+  
+  <!-- Fav icon -->
+  <link rel="icon" href="/images/favicon.png">
+  <link rel="shortcut icon" href="/images/favicon.png">
+  
+  <!-- CSS -->
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Blog CSS from bootstrap.   -->
+  <link href="/css/blog.css" rel="stylesheet">
+  <!-- My CSS.   -->
+  <link href="/css/mar9000.css" rel="stylesheet">
+  <!-- Font Awesome.   -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <!-- Lightbox.   -->
+  <link href="css/lightbox.css" rel="stylesheet" />
+  <!-- In line CSS.   -->
+  <style id="holderjs-style" type="text/css">
+  </style>
+</head>
+
+<body>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item" href="/index.html">Home</a>
+          <a class="blog-nav-item" href="/about.html">About</a>
+          <a class="blog-nav-item" href="/ithaca.html">Ithaca</a>
+          <a class="blog-nav-item" href="/tags/index.html">Tags</a>
+          <a class="blog-nav-item" href="/ilblogdigeronimo/">Il blog di Geronimo</a>
+          <a class="blog-nav-item" href="/posts.atom"><i class="fa fa-rss"></i></a>
+        </nav>
+      </div>
+    </div>
+    
+    <!-- Header end.   -->
+    
+
+<!-- Content.   -->
+<div class="container">
+  <div class="row">
+
+    <!-- Left.   -->
+    <div class="col-sm-8 blog-main">
+        <div class="blog-post">
+
+          <h2 class="blog-post-title"> New ECMAScript4MP project </h2>
+          <!-- Author.   -->
+          <div class="author-section">
+            <p class="photo"> <img src="/images/ml.png" /> </p>
+            <small> <p class="name"> Marco LOMBARDO<br/>
+                                     2015-02-12 </p> </small>
+          </div> <p style="clear: both;" />
+<!-- Abstract: should stay here because if indented a <pre> section does not shows correctly.   -->
+<p>There are several strategies for code generation. The one used by <a href="https://www.jetbrains.com/mps/">MPS</a> could be called <em>no code generation</em> strategy. In fact the suggested implementation for code generation is first to transform models in your language to models in the target language, or if you prefer first to transform AST representation of your program into AST representation of target language. Then models from a real language, for example Java, are translated to text. This means that only construct, like <em>if-then-else</em>, of language that one can compile or execute, like Java, have a place where one say how to translate them to text, in MPS called <em>TextGen</em> aspect.</p><p>MPS gives you for free a language called <em>baseLanguge</em> that transform seamlessly to Java. Whereas one of my target languages is Javascript, so I created this new MPS language. The new project is hosted on <a href="https://github.com/mar9000/ecmascript4mps">github</a>.</p>
+<!-- Content.   -->
+<p>I plan to write some more documentation in the future, but I want highlight few points here.</p><p>At first I started from the <em>grammar-like</em> specifications one can find on the <a href="http://www.ecma-international.org/ecma-262/5.1/">www.ecma-international.org</a> site. Probably it will be useful in the future to implement all lexer rules, still missing in this very first version. But with MPS you implement AST models while grammars are more focused on parsing strategies.</p><p>Then I came to the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API">Mozilla Parser API</a> that in addition has real parser implementations like <a href="http://esprima.org/">Esprima</a>. This was quite useful, in fact ECMAScript4MPS fully respect the AST documented by the Mozilla documentation with few exceptions.</p><p>Many editing features are still missing and editing is at the moment more an <em>AST editing</em> than <em>text editing</em>. However my goal is javascript generation so ECMAScript4MPS will be used for template definition, here editing with <em>intentions</em> and less automatic <em>side transform</em> I think it's acceptable. Said than lot of intentions and side transforms are still missing, stay tuned for next release.</p><p>Writing a developer's guide that could help other developers understanding MPS is also one of my goals.</p>
+
+        </div> <!-- /.blog-post -->
+    </div> <!-- /.blog-main -->
+
+    <!-- Right.   -->
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar-module sidebar-module-inset">
+            <h4>Tags:</h4>
+            <p>
+                          <a href="/tags/MPS.html"><span class="label label-primary">MPS</span></a>
+                          <a href="/tags/ecmascript.html"><span class="label label-primary">ecmascript</span></a>
+                          <a href="/tags/javascript.html"><span class="label label-primary">javascript</span></a>
+
+            </p>
+        </div>
+          <!-- Commented out, to be implemented on the index page.
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">January 2014</a></li>
+              <li><a href="#">December 2013</a></li>
+              <li><a href="#">November 2013</a></li>
+              <li><a href="#">October 2013</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>  -->
+    </div><!-- /.blog-sidebar -->
+
+  </div>   <!-- row.   -->
+</div>   <!-- /.container -->
+
+<!-- Footer.   -->
+<!-- Footer start.   -->
+<div class="blog-footer">
+  <p>Copyright mar9000.org 2011-2014.</p>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/jquery/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/lightbox.min.js"></script>
+
+<!-- Google analytics.   -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57055250-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body></html>

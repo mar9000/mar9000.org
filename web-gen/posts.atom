@@ -4,6 +4,17 @@
   <link rel="alternate" href="http://www.mar9000.org" />
   <subtitle>Master feed of posts from mar9000.org .</subtitle>
   <entry>
+    <title>New ECMAScript4MP project</title>
+    <link rel="alternate" href="http://www.mar9000.org/bliki/ecmascript-4-mps.html" />
+    <author>
+      <name />
+    </author>
+    <updated>2015-02-12T13:00:00Z</updated>
+    <published>2015-02-12T13:00:00Z</published>
+    <summary type="html">&lt;p&gt;There are several strategies for code generation. The one used by &lt;a href="https://www.jetbrains.com/mps/"&gt;MPS&lt;/a&gt; could be called &lt;em&gt;no code generation&lt;/em&gt; strategy. In fact the suggested implementation for code generation is first to transform models in your language to models in the target language, or if you prefer first to transform AST representation of your program into AST representation of target language. Then models from a real language, for example Java, are translated to text. This means that only construct, like &lt;em&gt;if-then-else&lt;/em&gt;, of language that one can compile or execute, like Java, have a place where one say how to translate them to text, in MPS called &lt;em&gt;TextGen&lt;/em&gt; aspect.&lt;/p&gt;&lt;p&gt;MPS gives you for free a language called &lt;em&gt;baseLanguge&lt;/em&gt; that transform seamlessly to Java. Whereas one of my target languages is Javascript, so I created this new MPS language. The new project is hosted on &lt;a href="https://github.com/mar9000/ecmascript4mps"&gt;github&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;I plan to write some more documentation in the future, but I want highlight few points here.&lt;/p&gt;&lt;p&gt;At first I started from the &lt;em&gt;grammar-like&lt;/em&gt; specifications one can find on the &lt;a href="http://www.ecma-international.org/ecma-262/5.1/"&gt;www.ecma-international.org&lt;/a&gt; site. Probably it will be useful in the future to implement all lexer rules, still missing in this very first version. But with MPS you implement AST models while grammars are more focused on parsing strategies.&lt;/p&gt;&lt;p&gt;Then I came to the &lt;a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API"&gt;Mozilla Parser API&lt;/a&gt; that in addition has real parser implementations like &lt;a href="http://esprima.org/"&gt;Esprima&lt;/a&gt;. This was quite useful, in fact ECMAScript4MPS fully respect the AST documented by the Mozilla documentation with few exceptions.&lt;/p&gt;&lt;p&gt;Many editing features are still missing and editing is at the moment more an &lt;em&gt;AST editing&lt;/em&gt; than &lt;em&gt;text editing&lt;/em&gt;. However my goal is javascript generation so ECMAScript4MPS will be used for template definition, here editing with &lt;em&gt;intentions&lt;/em&gt; and less automatic &lt;em&gt;side transform&lt;/em&gt; I think it's acceptable. Said than lot of intentions and side transforms are still missing, stay tuned for next release.&lt;/p&gt;&lt;p&gt;Writing a developer's guide that could help other developers understanding MPS is also one of my goals.&lt;/p&gt;</summary>
+    <dc:date>2015-02-12T13:00:00Z</dc:date>
+  </entry>
+  <entry>
     <title>Sunset in Antignano</title>
     <link rel="alternate" href="http://www.mar9000.org/bliki/../../photo-posts/2014/antignano-sunset-2014-10-24.html" />
     <author>
