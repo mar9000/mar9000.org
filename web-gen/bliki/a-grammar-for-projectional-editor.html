@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Header.   -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Marco LOMBARDO">
+  <title>The MAR9000's eye</title>
+  
+  <!-- Fav icon -->
+  <link rel="icon" href="/images/favicon.png">
+  <link rel="shortcut icon" href="/images/favicon.png">
+  
+  <!-- CSS -->
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Blog CSS from bootstrap.   -->
+  <link href="/css/blog.css" rel="stylesheet">
+  <!-- My CSS.   -->
+  <link href="/css/mar9000.css" rel="stylesheet">
+  <!-- Font Awesome.   -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <!-- Lightbox.   -->
+  <link href="css/lightbox.css" rel="stylesheet" />
+  <!-- In line CSS.   -->
+  <style id="holderjs-style" type="text/css">
+  </style>
+</head>
+
+<body>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item" href="/index.html">Home</a>
+          <a class="blog-nav-item" href="/about.html">About</a>
+          <a class="blog-nav-item" href="/ithaca.html">Ithaca</a>
+          <a class="blog-nav-item" href="/tags/index.html">Tags</a>
+          <a class="blog-nav-item" href="/ilblogdigeronimo/">Il blog di Geronimo</a>
+          <a class="blog-nav-item" href="/posts.atom"><i class="fa fa-rss"></i></a>
+        </nav>
+      </div>
+    </div>
+    
+    <!-- Header end.   -->
+    
+
+<!-- Content.   -->
+<div class="container">
+  <div class="row">
+
+    <!-- Left.   -->
+    <div class="col-sm-8 blog-main">
+        <div class="blog-post">
+
+          <h2 class="blog-post-title"> A grammar for projectional editor </h2>
+          <!-- Author.   -->
+          <div class="author-section">
+            <p class="photo"> <img src="/images/ml.png" /> </p>
+            <small> <p class="name"> Marco LOMBARDO<br/>
+                                     2015-12-13 </p> </small>
+          </div> <p style="clear: both;" />
+<!-- Abstract: should stay here because if indented a <pre> section does not shows correctly.   -->
+<p>Describing a language editor can be repetitive, for instance when you have to define expressions. <code>expression &#39;+&#39; expression</code> and <code>expression &#39;*&#39; expression</code> is a typical example. From the grammar file that describes the language structure it's possible to recognize repetitive rule structures and build an editor in a consistent way.</p><p>The <a href="https://github.com/mar9000/pe" title="PE project">PE</a> project defines a grammar and generates AST in a way not related to any projectional editor. <a href="https://github.com/mar9000/pe4mps" title="PE4MPS project">PE4MPS</a> project imports the generated ASTs into <a href="http://www.jetbrains.com/mps" title="MPS project">MPS</a> generating for example from this rule:</p>
+<pre><code>Graph:
+  strict=STRICT? type=GraphType name=string?
+  statementList&lt;indentList(&#39;{&#39;, &#39;}&#39;)&gt;=Statement*
+;
+</code></pre><p>this MPS editor:</p><p><img src="/images/graph-editor-example.png" alt="Graph editor example""/></p>
+<!-- Content.   -->
+<p>The defined list of indented statement can be utilized also in:</p>
+<pre><code>Subgraph:
+  (SUBGRAPH label=Id?)?
+  statementList&lt;indentList(&#39;{&#39;, &#39;}&#39;)&gt;=Statement*
+;
+</code></pre><p>giving:</p><p><img src="/images/subgraph-editor-example.png" alt="Subgraph editor example""/></p><p>The last example for this small introduction are optional group of elements like:</p>
+<pre><code>NodeId:
+  id=Id (&#39;:&#39; first=Id (&#39;:&#39; second=Id)?)?
+;
+</code></pre><p>translated in MPS into two intentions:</p><p><img src="/images/nodeid-editor-example.png" alt="NodeId editor example""/></p><p>The two mentioned project are still at their very first version and many features are still missing, probably the most important one is scopes handling.</p>
+
+        </div> <!-- /.blog-post -->
+    </div> <!-- /.blog-main -->
+
+    <!-- Right.   -->
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar-module sidebar-module-inset">
+            <h4>Tags:</h4>
+            <p>
+                          <a href="/tags/DSL.html"><span class="label label-primary">DSL</span></a>
+                          <a href="/tags/MPS.html"><span class="label label-primary">MPS</span></a>
+                          <a href="/tags/projectional editor.html"><span class="label label-primary">projectional editor</span></a>
+
+            </p>
+        </div>
+          <!-- Commented out, to be implemented on the index page.
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">January 2014</a></li>
+              <li><a href="#">December 2013</a></li>
+              <li><a href="#">November 2013</a></li>
+              <li><a href="#">October 2013</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>  -->
+    </div><!-- /.blog-sidebar -->
+
+  </div>   <!-- row.   -->
+</div>   <!-- /.container -->
+
+<!-- Footer.   -->
+<!-- Footer start.   -->
+<div class="blog-footer">
+  <p>Copyright mar9000.org 2011-2014.</p>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/jquery/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/lightbox.min.js"></script>
+
+<!-- Google analytics.   -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57055250-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body></html>

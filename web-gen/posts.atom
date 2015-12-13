@@ -4,6 +4,31 @@
   <link rel="alternate" href="http://www.mar9000.org" />
   <subtitle>Master feed of posts from mar9000.org .</subtitle>
   <entry>
+    <title>A grammar for projectional editor</title>
+    <link rel="alternate" href="http://www.mar9000.org/bliki/a-grammar-for-projectional-editor.html" />
+    <author>
+      <name />
+    </author>
+    <updated>2015-12-13T13:00:00Z</updated>
+    <published>2015-12-13T13:00:00Z</published>
+    <summary type="html">&lt;p&gt;Describing a language editor can be repetitive, for instance when you have to define expressions. &lt;code&gt;expression &amp;#39;+&amp;#39; expression&lt;/code&gt; and &lt;code&gt;expression &amp;#39;*&amp;#39; expression&lt;/code&gt; is a typical example. From the grammar file that describes the language structure it's possible to recognize repetitive rule structures and build an editor in a consistent way.&lt;/p&gt;&lt;p&gt;The &lt;a href="https://github.com/mar9000/pe" title="PE project"&gt;PE&lt;/a&gt; project defines a grammar and generates AST in a way not related to any projectional editor. &lt;a href="https://github.com/mar9000/pe4mps" title="PE4MPS project"&gt;PE4MPS&lt;/a&gt; project imports the generated ASTs into &lt;a href="http://www.jetbrains.com/mps" title="MPS project"&gt;MPS&lt;/a&gt; generating for example from this rule:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Graph:
+  strict=STRICT? type=GraphType name=string?
+  statementList&amp;lt;indentList(&amp;#39;{&amp;#39;, &amp;#39;}&amp;#39;)&amp;gt;=Statement*
+;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;this MPS editor:&lt;/p&gt;&lt;p&gt;&lt;img src="/images/graph-editor-example.png" alt="Graph editor example""/&gt;&lt;/p&gt;&lt;p&gt;The defined list of indented statement can be utilized also in:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Subgraph:
+  (SUBGRAPH label=Id?)?
+  statementList&amp;lt;indentList(&amp;#39;{&amp;#39;, &amp;#39;}&amp;#39;)&amp;gt;=Statement*
+;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;giving:&lt;/p&gt;&lt;p&gt;&lt;img src="/images/subgraph-editor-example.png" alt="Subgraph editor example""/&gt;&lt;/p&gt;&lt;p&gt;The last example for this small introduction are optional group of elements like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;NodeId:
+  id=Id (&amp;#39;:&amp;#39; first=Id (&amp;#39;:&amp;#39; second=Id)?)?
+;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;translated in MPS into two intentions:&lt;/p&gt;&lt;p&gt;&lt;img src="/images/nodeid-editor-example.png" alt="NodeId editor example""/&gt;&lt;/p&gt;&lt;p&gt;The two mentioned project are still at their very first version and many features are still missing, probably the most important one is scopes handling.&lt;/p&gt;</summary>
+    <dc:date>2015-12-13T13:00:00Z</dc:date>
+  </entry>
+  <entry>
     <title>New ECMAScript4MPS project</title>
     <link rel="alternate" href="http://www.mar9000.org/bliki/ecma-script-4-mps.html" />
     <author>

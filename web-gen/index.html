@@ -68,6 +68,13 @@
   </div>
 
   <dl class="dl-horizontal">
+        <dt>2015-12-13</dt>
+        <dd><b><a href="bliki/a-grammar-for-projectional-editor.html">A grammar for projectional editor</a></b><br/> <p>Describing a language editor can be repetitive, for instance when you have to define expressions. <code>expression &#39;+&#39; expression</code> and <code>expression &#39;*&#39; expression</code> is a typical example. From the grammar file that describes the language structure it's possible to recognize repetitive rule structures and build an editor in a consistent way.</p><p>The <a href="https://github.com/mar9000/pe" title="PE project">PE</a> project defines a grammar and generates AST in a way not related to any projectional editor. <a href="https://github.com/mar9000/pe4mps" title="PE4MPS project">PE4MPS</a> project imports the generated ASTs into <a href="http://www.jetbrains.com/mps" title="MPS project">MPS</a> generating for example from this rule:</p>
+    <pre><code>Graph:
+      strict=STRICT? type=GraphType name=string?
+      statementList&lt;indentList(&#39;{&#39;, &#39;}&#39;)&gt;=Statement*
+    ;
+    </code></pre><p>this MPS editor:</p><p><img src="/images/graph-editor-example.png" alt="Graph editor example""/></p> </dd>
         <dt>2015-02-12</dt>
         <dd><b><a href="bliki/ecma-script-4-mps.html">New ECMAScript4MPS project</a></b><br/> <p>There are several strategies for code generation. The one used by <a href="https://www.jetbrains.com/mps/">MPS</a> could be called <em>no code generation</em> strategy. In fact the suggested implementation for code generation is first to transform models in your language to models in the target language, or if you prefer first to transform AST representation of your program into AST representation of target language. Then models from a real language, for example Java, are translated to text. This means that only construct, like <em>if-then-else</em>, of language that one can compile or execute, like Java, have a place where one say how to translate them to text, in MPS called <em>TextGen</em> aspect.</p><p>MPS gives you for free a language called <em>baseLanguge</em> that transform seamlessly to Java. Whereas one of my target languages is Javascript, so I created this new MPS language. The new project is hosted on <a href="https://github.com/mar9000/ecmascript4mps">github</a>.</p> </dd>
         <dt>2014-10-24</dt>
@@ -81,15 +88,6 @@
         <dd><b><a href="bliki/smallest-static-site-generator.html">The smallest static site generator</a></b><br/> <p>Now that I can write posts in HTML and in Markdown what is missing to create the smallest static web generator we can imagine?</p> </dd>
         <dt>2014-03-02</dt>
         <dd><b><a href="bliki/adding-a-markup-language.html">Adding a markup language</a></b><br/> <p>The previous post introduces a small language to define post files and in this project you can find some java classes to transform them into a small blog, based on bootstrap. The first improvement I see that was missing it's a markup language to speed up writing of posts. I decide to investigate a bit on <em>static site generators</em> like for example <a href="http://jekyllrb.com">Jekyll</a>, actually the one used by github.</p> </dd>
-        <dt>2014-02-15</dt>
-        <dd><b><a href="bliki/post-n1.html">Post #1</a></b><br/> <p>If you are a Java developer and you are interested in Domain Specific Language (DSL)
-    and Code Generation, soon or late you are going to play a bit with <a href="http://www.antlr.org">ANTLR</a>.
-    In addition if you are such kind of person you will probably know the Martin Fowler
-    <a href="http://martinfowler.com/bliki/WhatIsaBliki.html">bliki</a>.
-    Now something personal: I in general dislike working with graphic tools when
-    I can do the same thing by coding and/or command line (who knows if in one of my next posts I will decide to
-    explain why). I also dislike to store into a database things that are much more comfortable into the
-    file system. All these reasons drive me to implement my own <i>bliki</i>. </p> </dd>
 
   </dl>
 
