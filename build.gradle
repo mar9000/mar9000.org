@@ -1,0 +1,34 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
+plugins {
+    id 'application'
+}
+application {
+  mainClassName = 'org.mar9000.blog.Blog'
+}
+
+/*** Plugins.   ***/
+apply plugin: 'java'
+
+/*** Project properties.   ***/
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+/*** Repositories & dependencies.   ***/
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+  compile group: 'org.antlr', name: 'antlr4', version: '4.3'
+  compile group: 'org.pegdown', name: 'pegdown', version: '1.4.2'
+  compile group: 'rome', name: 'rome', version: '1.0'
+}
+
+run {
+  args += '/opt/working-dir/mar9000.org'
+}
