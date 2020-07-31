@@ -29,6 +29,7 @@
   <!-- In line CSS.   -->
   <style id="holderjs-style" type="text/css">
   </style>
+  <link rel="stylesheet" type="text/css" href="/css/cookieconsent.min.css" />
 </head>
 
 <body>
@@ -76,6 +77,21 @@
 <script src="/jquery/jquery.min.js"></script>
 <script src="/bootstrap/js/bootstrap.min.js"></script>
 <script src="/js/lightbox.min.js"></script>
+<script src="/js/cookieconsent.min.js"></script>
+<script>
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#edeff5",
+      "text": "#838391"
+    },
+    "button": {
+      "background": "#4b81e8"
+    }
+  },
+  "position": "bottom-right"
+});
+</script>
 
 <!-- Google analytics.   -->
 <script>
