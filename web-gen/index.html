@@ -69,6 +69,24 @@
   </div>
 
   <dl class="dl-horizontal">
+        <dt>2020-10-08</dt>
+        <dd><b><a href="bliki/efficient-DTOs.html">Efficient DTOs</a></b><br/> <p>When we need to return data to be displayed on the UI as <a href="https://martinfowler.com/eaaCatalog/dataTransferObject.html">DTO</a>s we are going to read from multiple repositories unless for trivial UI. For example forum posts can have author (a user) and comments. Comments can have author too.</p>
+    <pre><code>{
+      posts: [{
+        title: &quot;Efficent DTO&quot;,
+        author: {
+          name: &quot;Marco&quot;
+        },
+        comments: [{
+          author: {
+            ...
+    }
+    </code></pre><p>In this context, no matter the technology we are going to use, the N+1 problem will pop up. For instance with:</p>
+    <ul>
+      <li>ReST API: we execute a request for the list of posts then N requests for the User resources.</li>
+      <li>ReST API + hint, like <code>/posts?with=user</code>: now we have only one ReST request but probably on the server users  are loaded one by one from their repository.</li>
+      <li>GraphQL: without data loaders you still have the same problem, the user of a post is resolved for each post.</li>
+    </ul><p>The last example is not accidentally: when I faced this problem I thought at first to resort to GraphQL and this is why my idea comes from it. However I did not have dynamic queries but static ones, read "several endpoints that return always the same JSON", hence I did not want to adopt en engine to parse, for a given endpoint, the same query over and over again.</p><p>I found that what I needed were batched loaders and <em>data loaders</em>, something that every GraphQL implementation have as associated library. In our example for every post DTO resolution the load of the user is delayed until we have the complete list of the users to load (same for comments and users of comments) so we can batch load users.<br/>Other sulutions, illustrated below, do not scale, at least in my use cases.<br/>The library that implements the above algorithm, without GraphQL, is <a href="https://github.com/mar9000/graph-loader">graph-loader</a>.</p> </dd>
         <dt>2015-12-13</dt>
         <dd><b><a href="bliki/a-grammar-for-projectional-editor.html">A grammar for projectional editor</a></b><br/> <p>Describing a language editor can be repetitive, for instance when you have to define expressions. <code>expression &#39;+&#39; expression</code> and <code>expression &#39;*&#39; expression</code> is a typical example. From the grammar file that describes the language structure it's possible to recognize repetitive rule structures and build an editor in a consistent way.</p><p>The <a href="https://github.com/mar9000/pe" title="PE project">PE</a> project defines a grammar and generates AST in a way not related to any projectional editor. <a href="https://github.com/mar9000/pe4mps" title="PE4MPS project">PE4MPS</a> project imports the generated ASTs into <a href="http://www.jetbrains.com/mps" title="MPS project">MPS</a> generating for example from this rule:</p>
     <pre><code>Graph:
@@ -87,8 +105,6 @@
         <dd><b><a href="bliki/antmark.g4.html">ANTLR4 grammar for Markdown</a></b><br/> <p><a href="http://daringfireball.net/projects/markdown/">Markdown</a> is today used in several place including this blog.<br/><a href="http://www.antlr.org">ANTLR</a> is also used, almost, everywhere where you need a parser.<br/>So to learn ANTLR I have chosen to try teach ANTLR how to parse Markdown syntax. This task has been much more hard then I expected.</p> </dd>
         <dt>2014-03-03</dt>
         <dd><b><a href="bliki/smallest-static-site-generator.html">The smallest static site generator</a></b><br/> <p>Now that I can write posts in HTML and in Markdown what is missing to create the smallest static web generator we can imagine?</p> </dd>
-        <dt>2014-03-02</dt>
-        <dd><b><a href="bliki/adding-a-markup-language.html">Adding a markup language</a></b><br/> <p>The previous post introduces a small language to define post files and in this project you can find some java classes to transform them into a small blog, based on bootstrap. The first improvement I see that was missing it's a markup language to speed up writing of posts. I decide to investigate a bit on <em>static site generators</em> like for example <a href="http://jekyllrb.com">Jekyll</a>, actually the one used by github.</p> </dd>
 
   </dl>
 
