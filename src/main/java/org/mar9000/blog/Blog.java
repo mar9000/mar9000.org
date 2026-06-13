@@ -67,7 +67,7 @@ public class Blog {
 	public static final String WEB_TEMPLATE = "/web-template";
 	public static final String POSTS = "/posts";
 	public static final String PHOTO_POSTS = "/photo-posts";
-	public static final String WEB_GEN = "/web-gen";
+	public static final String WEB_GEN = "/docs";
 	public static final String HEADER = "header.html";
 	public static final String FOOTER = "footer.html";
 	public static final int NUMBER_POSTS_ON_INDEX = 7;
