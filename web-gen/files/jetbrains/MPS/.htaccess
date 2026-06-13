@@ -1,0 +1,5 @@
+# This dir. for MPS pdf has an hidden name but listing is enabled.
+# Who knows the name can list the content.
+Options +Indexes
+IndexOptions +FancyIndexing HTMLTable NameWidth=* DescriptionWidth=*
+
